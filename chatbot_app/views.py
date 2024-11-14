@@ -1,66 +1,3 @@
-# from rest_framework.decorators import api_view
-# from rest_framework.response import Response
-# from django.http import StreamingHttpResponse, HttpRequest
-# from drf_spectacular.utils import extend_schema
-# from .serializers import ChatbotInputSerializer
-# import openai
-# import os
-# from dotenv import load_dotenv
-# import logging
-# from .services import ChatService
-
-# # Setup logging
-# logger = logging.getLogger(__name__)
-
-# # # Configure OpenAI
-# load_dotenv()
-# openai.api_key = os.getenv('OPENAI_API_KEY')
-# chat_service = ChatService(openai.Client())
-
-
-# @extend_schema(
-#     request=ChatbotInputSerializer,
-#     responses={200: None},  # Streaming response can't be represented in OpenAPI
-#     description="Streams a chat response from OpenAI API"
-# )
-# @api_view(['POST'])
-# def chatbot(request: HttpRequest) -> StreamingHttpResponse:
-#     """
-#     Handle incoming chat requests and stream responses from OpenAI.
-
-#     Args:
-#         request: HTTP request object containing chat messages in the format:
-#                 {"messages": [{"role": "user", "content": "Hello"}]}
-
-#     Returns:
-#         StreamingHttpResponse: A streaming response containing either:
-#             - Text chunks from OpenAI's response
-#             - JSON error message if something goes wrong
-#             - 400 status with error message if no messages provided
-
-#     Example:
-#         POST /api/chat/
-#         {"messages": [{"role": "user", "content": "Tell me a joke"}]}
-#     """
-#     logger.info(f"Received chatbot request from {request.META.get('REMOTE_ADDR')}")
-    
-#     # Get chat message from incoming request
-#     messages = request.data.get('messages', [])
-    
-#     if not messages:
-#         logger.warning("Received request with no messages")
-#         return Response({"error": "Messages are required"}, status=400)
-    
-#     logger.info(f"Processing chat with {len(messages)} messages")
-    
-#     # Get LLM response and stream it back to the UI
-#     return StreamingHttpResponse(
-#         chat_service.stream_response(messages),
-#         content_type="text/event-stream",
-#         charset='utf-8' 
-#     )
-
-
 from rest_framework.decorators import api_view, parser_classes
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser
@@ -85,7 +22,7 @@ voice_service = VoiceToTextService(client)
 
 @extend_schema(
     request=ChatbotInputSerializer,
-    responses={200: None},  # Streaming response can't be represented in OpenAPI
+    responses={200: None},
     description="Streams a chat response from OpenAI API"
 )
 @api_view(['POST'])
