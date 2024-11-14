@@ -83,6 +83,6 @@ The `vt_demo` folder is the root folder for the Django project, the `chatbot_app
   poetry add package-name
   ```
 
-## TODO
+## To Do
 
 - Tests need updating mocking OpenAI is broken from latest changes.
